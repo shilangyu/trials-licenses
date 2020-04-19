@@ -52,56 +52,58 @@ pub fn generate_blank_license(
     profile_picture_path: Option<PathBuf>,
     output_path: PathBuf,
 ) -> Result<(), Box<dyn Error>> {
+    use crate::bikes::Bike;
+
     let mut args = Vec::new();
     args.push("assets/license.png");
 
-    struct Bike {
-        name: &'static str,
+    struct BikeImg {
+        name: Bike,
         magick_geometry: &'static str,
     }
 
     let bike_data: Vec<_> = [
-        Bike {
-            name: "armadillo",
+        BikeImg {
+            name: Bike::Armadillo,
             magick_geometry: "+0+500",
         },
-        Bike {
-            name: "tango",
+        BikeImg {
+            name: Bike::Tango,
             magick_geometry: "+0+700",
         },
-        Bike {
-            name: "bronco",
+        BikeImg {
+            name: Bike::Bronco,
             magick_geometry: "+0+900",
         },
-        Bike {
-            name: "jackal",
+        BikeImg {
+            name: Bike::Jackal,
             magick_geometry: "+300+500",
         },
-        Bike {
-            name: "mantis",
+        BikeImg {
+            name: Bike::Mantis,
             magick_geometry: "+300+700",
         },
-        Bike {
-            name: "marauder",
+        BikeImg {
+            name: Bike::Marauder,
             magick_geometry: "+300+900",
         },
-        Bike {
-            name: "riptide",
+        BikeImg {
+            name: Bike::Riptide,
             magick_geometry: "+600+500",
         },
-        Bike {
-            name: "berzerker",
+        BikeImg {
+            name: Bike::Berserker,
             magick_geometry: "+600+700",
         },
-        Bike {
-            name: "phantom",
+        BikeImg {
+            name: Bike::Phantom,
             magick_geometry: "+600+900",
         },
     ]
     .iter()
     .map(|b| {
         (
-            format!("assets/{}.png", b.name),
+            format!("assets/{}.png", b.name.to_string()),
             b.magick_geometry.to_string(),
         )
     })

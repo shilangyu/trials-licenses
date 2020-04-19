@@ -2,6 +2,7 @@ use std::path::PathBuf;
 use structopt::StructOpt;
 
 mod args;
+mod bikes;
 mod cmd;
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");

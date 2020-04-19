@@ -2,7 +2,6 @@ use structopt::StructOpt;
 
 mod args;
 mod cmd;
-mod magick;
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
@@ -17,6 +16,6 @@ fn main() {
     let version_path = cmd::generate_version_pic().expect("Failed to generate version png");
 
     println!("Generating blank license...");
-    cmd::generate_blank_license(nickname_path, version_path, None, opt.output)
+    cmd::generate_blank_license(nickname_path, version_path, opt.profile_picture, opt.output)
         .expect("Failed to generate blank license");
 }

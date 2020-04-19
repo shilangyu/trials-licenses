@@ -49,82 +49,53 @@ pub fn generate_version_pic() -> Result<PathBuf, Box<dyn Error>> {
 pub fn generate_blank_license(
     nickname_path: PathBuf,
     version_path: PathBuf,
-    profile_picture_path: Option<String>,
+    profile_picture_path: Option<PathBuf>,
     output_path: PathBuf,
 ) -> Result<(), Box<dyn Error>> {
-    use crate::magick::geometry::*;
-
     let mut args = Vec::new();
     args.push("assets/license.png");
 
     struct Bike {
         name: &'static str,
-        magick_geometry: Geometry,
+        magick_geometry: &'static str,
     }
 
     let bike_data: Vec<_> = [
         Bike {
             name: "armadillo",
-            magick_geometry: Geometry {
-                resize: None,
-                position: Some(Position { x: 0, y: 500 }),
-            },
+            magick_geometry: "+0+500",
         },
         Bike {
             name: "tango",
-            magick_geometry: Geometry {
-                resize: None,
-                position: Some(Position { x: 0, y: 500 }),
-            },
+            magick_geometry: "+0+700",
         },
         Bike {
             name: "bronco",
-            magick_geometry: Geometry {
-                resize: None,
-                position: Some(Position { x: 0, y: 500 }),
-            },
+            magick_geometry: "+0+900",
         },
         Bike {
             name: "jackal",
-            magick_geometry: Geometry {
-                resize: None,
-                position: Some(Position { x: 0, y: 500 }),
-            },
+            magick_geometry: "+300+500",
         },
         Bike {
             name: "mantis",
-            magick_geometry: Geometry {
-                resize: None,
-                position: Some(Position { x: 0, y: 500 }),
-            },
+            magick_geometry: "+300+700",
         },
         Bike {
             name: "marauder",
-            magick_geometry: Geometry {
-                resize: None,
-                position: Some(Position { x: 0, y: 500 }),
-            },
+            magick_geometry: "+300+900",
         },
         Bike {
             name: "riptide",
-            magick_geometry: Geometry {
-                resize: None,
-                position: Some(Position { x: 0, y: 500 }),
-            },
+            magick_geometry: "+600+500",
         },
         Bike {
             name: "berzerker",
-            magick_geometry: Geometry {
-                resize: None,
-                position: Some(Position { x: 0, y: 500 }),
-            },
+            magick_geometry: "+600+700",
         },
         Bike {
             name: "phantom",
-            magick_geometry: Geometry {
-                resize: None,
-                position: Some(Position { x: 0, y: 500 }),
-            },
+            magick_geometry: "+600+900",
         },
     ]
     .iter()
@@ -152,6 +123,13 @@ pub fn generate_blank_license(
     args.push("-geometry");
     args.push("+100+100");
     args.push("-composite");
+
+    if let Some(path) = &profile_picture_path {
+        args.push(path.to_str().unwrap());
+        args.push("-geometry");
+        args.push("100x100!+100+100");
+        args.push("-composite");
+    }
 
     args.push(output_path.to_str().unwrap());
 

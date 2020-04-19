@@ -9,11 +9,19 @@ pub struct Opt {
     #[structopt(short, long)]
     pub nickname: String,
 
-    /// Path to profile picture
+    /// Path to the profile picture
     #[structopt(short, long, parse(from_os_str))]
     pub profile_picture: Option<PathBuf>,
 
-    /// Output image path
+    /// Basic license bikes
+    #[structopt(short, long)]
+    pub basic: Vec<String>,
+
+    /// Advanced license bikes
+    #[structopt(short, long)]
+    pub advanced: Vec<String>,
+
+    /// Output image path [default: $nickname.png]
     #[structopt(short, long, parse(from_os_str))]
-    pub output: PathBuf,
+    pub output: Option<PathBuf>,
 }

@@ -5,18 +5,20 @@ CLI tool for generating `png` licenses. Currently works only on Linux (Maybe OSX
 Written in Rust. Depends on `ImageMagick` v6.9.
 
 ```
-license-gen 0.1.0
+license-gen 0.2.0
 A license generator for Trials Licenses
 
 USAGE:
-    license-gen [FLAGS] --nickname <nickname> --output <output>
+    license-gen [OPTIONS] --nickname <nickname>
 
 FLAGS:
-    -d, --debug      Activate debug mode
     -h, --help       Prints help information
     -V, --version    Prints version information
 
 OPTIONS:
-    -n, --nickname <nickname>    Player's nickname
-    -o, --output <output>        Output image path
+    -a, --advanced <advanced>...               Advanced license bikes
+    -b, --basic <basic>...                     Basic license bikes
+    -n, --nickname <nickname>                  Player's nickname
+    -o, --output <output>                      Output image path [default: $nickname.png]
+    -p, --profile-picture <profile-picture>    Path to the profile picture
 ```

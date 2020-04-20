@@ -1,7 +1,8 @@
-use crate::assets;
 use std::error::Error;
 use std::path::PathBuf;
 use std::process::Command;
+
+use crate::{assets, bikes::Bike};
 
 pub fn generate_nickname_pic(nickname: &str) -> Result<PathBuf, Box<dyn Error>> {
     let label_string = format!("label:{}", nickname);
@@ -53,8 +54,6 @@ pub fn generate_blank_license(
     profile_picture_path: Option<PathBuf>,
     output_path: PathBuf,
 ) -> Result<(), Box<dyn Error>> {
-    use crate::bikes::Bike;
-
     let mut args = Vec::new();
     let blank_path = assets::get_path("blank.png");
     args.push(blank_path.to_str().unwrap());
@@ -103,7 +102,7 @@ pub fn generate_blank_license(
         },
         BikeImg {
             name: Bike::Donkey,
-            magick_geometry: "150%x+1280+400",
+            magick_geometry: "150%x+1300+400",
         },
         BikeImg {
             name: Bike::Stallion,
@@ -156,6 +155,72 @@ pub fn generate_blank_license(
 
     args.push(output_path.to_str().unwrap());
 
+    Command::new("convert").args(args).output()?;
+
+    Ok(())
+}
+
+pub fn apply_ticks(
+    to: PathBuf,
+    basic: Vec<Bike>,
+    advanced: Vec<Bike>,
+) -> Result<(), Box<dyn Error>> {
+    let green_tick = assets::get_path("green_tick.png");
+    let red_tick = assets::get_path("red_tick.png");
+
+    let mut args = Vec::new();
+    args.push(to.to_str().unwrap());
+
+    for bike in basic {
+        args.push(green_tick.to_str().unwrap());
+        args.push("-geometry");
+        args.push(match bike {
+            Bike::Armadillo => "+30+400",
+            Bike::Tango => "+30+600",
+            Bike::Bronco => "+30+800",
+            Bike::Jackal => "+430+400",
+            Bike::Mantis => "+430+600",
+            Bike::Marauder => "+430+800",
+            Bike::Riptide => "+830+400",
+            Bike::Berserker => "+830+600",
+            Bike::Phantom => "+830+800",
+            Bike::Donkey => "+1280+400",
+            Bike::Stallion => "+1280+600",
+            Bike::Agent => "+1280+800",
+        });
+        args.push("-channel");
+        args.push("A");
+        args.push("-evaluate");
+        args.push("multiply");
+        args.push("0.5");
+        args.push("-composite");
+    }
+
+    for bike in advanced {
+        args.push(red_tick.to_str().unwrap());
+        args.push("-geometry");
+        args.push(match bike {
+            Bike::Armadillo => "+190+400",
+            Bike::Tango => "+190+600",
+            Bike::Bronco => "+190+800",
+            Bike::Jackal => "+590+400",
+            Bike::Mantis => "+590+600",
+            Bike::Marauder => "+590+800",
+            Bike::Riptide => "+990+400",
+            Bike::Berserker => "+990+600",
+            Bike::Phantom => "+990+800",
+            Bike::Donkey => "+1440+400",
+            Bike::Stallion => "+1440+600",
+            Bike::Agent => "+1440+800",
+        });
+        args.push("-channel");
+        args.push("A");
+        args.push("-evaluate");
+        args.push("multiply");
+        args.push("0.5");
+        args.push("-composite");
+    }
+    args.push(to.to_str().unwrap());
     Command::new("convert").args(args).output()?;
 
     Ok(())

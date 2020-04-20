@@ -1,3 +1,7 @@
+use dirs;
+
+use std::path::PathBuf;
+
 #[derive(Debug)]
 pub enum Bike {
     Armadillo,
@@ -43,5 +47,14 @@ impl Bike {
             Self::Berserker => "berserker",
             Self::Phantom => "phantom",
         })
+    }
+
+    pub fn path_to(&self) -> PathBuf {
+        let config_dir = dirs::config_dir().unwrap();
+
+        config_dir
+            .as_path()
+            .join(crate::NAME)
+            .join(self.to_string() + ".png")
     }
 }

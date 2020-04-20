@@ -101,16 +101,11 @@ pub fn generate_blank_license(
         },
     ]
     .iter()
-    .map(|b| {
-        (
-            format!("assets/{}.png", b.name.to_string()),
-            b.magick_geometry.to_string(),
-        )
-    })
+    .map(|b| (b.name.path_to(), b.magick_geometry.to_string()))
     .collect();
 
     for (path, geo) in &bike_data {
-        args.push(path.as_str());
+        args.push(path.to_str().unwrap());
         args.push("-geometry");
         args.push(geo.as_str());
         args.push("-composite");

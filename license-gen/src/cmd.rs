@@ -1,3 +1,4 @@
+use crate::assets;
 use std::error::Error;
 use std::path::PathBuf;
 use std::process::Command;
@@ -5,7 +6,6 @@ use std::process::Command;
 pub fn generate_nickname_pic(nickname: &str) -> Result<PathBuf, Box<dyn Error>> {
     let label_string = format!("label:{}", nickname);
     let out_string = format!("/tmp/{}.png", nickname);
-    let font_path = crate::assets::get_path("Comfortaa-Regular.ttf");
 
     Command::new("convert")
         .args(&[
@@ -14,7 +14,7 @@ pub fn generate_nickname_pic(nickname: &str) -> Result<PathBuf, Box<dyn Error>> 
             "-fill",
             "black",
             "-font",
-            font_path.to_str().unwrap(),
+            assets::get_path("Comfortaa-Regular.ttf").to_str().unwrap(),
             "-pointsize",
             "72",
             label_string.as_str(),
@@ -28,7 +28,6 @@ pub fn generate_nickname_pic(nickname: &str) -> Result<PathBuf, Box<dyn Error>> 
 pub fn generate_version_pic() -> Result<PathBuf, Box<dyn Error>> {
     let label_string = format!("label:v{}", crate::VERSION);
     let out_string = format!("/tmp/v{}.png", crate::VERSION);
-    let font_path = crate::assets::get_path("Comfortaa-Regular.ttf");
 
     Command::new("convert")
         .args(&[
@@ -37,7 +36,7 @@ pub fn generate_version_pic() -> Result<PathBuf, Box<dyn Error>> {
             "-fill",
             "black",
             "-font",
-            font_path.to_str().unwrap(),
+            assets::get_path("Comfortaa-Regular.ttf").to_str().unwrap(),
             "-pointsize",
             "72",
             label_string.as_str(),
@@ -57,7 +56,8 @@ pub fn generate_blank_license(
     use crate::bikes::Bike;
 
     let mut args = Vec::new();
-    args.push("assets/license.png");
+    let blank_path = assets::get_path("blank.png");
+    args.push(blank_path.to_str().unwrap());
 
     struct BikeImg {
         name: Bike,

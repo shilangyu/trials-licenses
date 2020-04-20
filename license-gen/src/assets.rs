@@ -24,6 +24,9 @@ pub fn save() -> std::io::Result<()> {
     save_asset!("berserker.png");
     save_asset!("phantom.png");
     save_asset!("Comfortaa-Regular.ttf");
+    save_asset!("green_tick.png");
+    save_asset!("red_tick.png");
+    save_asset!("blank.png");
 
     Ok(())
 }

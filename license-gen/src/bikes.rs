@@ -1,5 +1,3 @@
-use dirs;
-
 use std::path::PathBuf;
 
 #[derive(Debug)]
@@ -50,11 +48,7 @@ impl Bike {
     }
 
     pub fn path_to(&self) -> PathBuf {
-        let config_dir = dirs::config_dir().unwrap();
-
-        config_dir
-            .as_path()
-            .join(crate::NAME)
-            .join(self.to_string() + ".png")
+        let asset = self.to_string() + ".png";
+        crate::assets::get_path(asset.as_str())
     }
 }

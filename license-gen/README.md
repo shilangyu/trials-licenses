@@ -1,6 +1,6 @@
 # license-gen
 
-CLI tool for generating `png` licenses.
+CLI tool for generating `png` licenses. Currently works only on Linux (Maybe OSX?).
 
 Written in Rust. Depends on `ImageMagick` v6.9.
 

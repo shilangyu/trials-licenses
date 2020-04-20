@@ -7,6 +7,7 @@ mod bikes;
 mod cmd;
 
 const VERSION: &'static str = env!("CARGO_PKG_VERSION");
+const NAME: &'static str = env!("CARGO_PKG_NAME");
 
 fn main() {
     save_bins().expect("Failed to save license assets");
@@ -39,50 +40,28 @@ fn save_bins() -> std::io::Result<()> {
     use std::io::prelude::*;
 
     let config_dir = dirs::config_dir().unwrap();
-    let config_dir = config_dir.as_path().join("license-gen");
+    let config_dir = config_dir.as_path().join(NAME);
 
     let _ = create_dir(&config_dir);
 
-    {
-        static ARMADILLO: &'static [u8] = include_bytes!("../assets/armadillo.png");
-        let mut file = File::create(config_dir.join("armadillo.png"))?;
-        file.write_all(ARMADILLO)?;
+    /// Takes a png from assets/ (at compile time) and puts it into the config directory of the OS + /license-gen (at runtime)
+    macro_rules! save_asset {
+        ($name:ident) => {
+            File::create(config_dir.join(concat!(stringify!($name), ".png")))?.write_all(
+                include_bytes!(concat!("../assets/", stringify!($name), ".png")),
+            )?;
+        };
     }
-    {
-        static TANGO: &'static [u8] = include_bytes!("../assets/tango.png");
-        let mut file = File::create(config_dir.join("tango.png"))?;
-        file.write_all(TANGO)?;
-    }
-    {
-        static BRONCO: &'static [u8] = include_bytes!("../assets/bronco.png");
-        let mut file = File::create(config_dir.join("bronco.png"))?;
-        file.write_all(BRONCO)?;
-    }
-    {
-        static JACKAL: &'static [u8] = include_bytes!("../assets/jackal.png");
-        let mut file = File::create(config_dir.join("jackal.png"))?;
-        file.write_all(JACKAL)?;
-    }
-    {
-        static MARAUDER: &'static [u8] = include_bytes!("../assets/marauder.png");
-        let mut file = File::create(config_dir.join("MARAUDER.png"))?;
-        file.write_all(MARAUDER)?;
-    }
-    {
-        static RIPTIDE: &'static [u8] = include_bytes!("../assets/riptide.png");
-        let mut file = File::create(config_dir.join("riptide.png"))?;
-        file.write_all(RIPTIDE)?;
-    }
-    {
-        static BERSERKER: &'static [u8] = include_bytes!("../assets/berserker.png");
-        let mut file = File::create(config_dir.join("berserker.png"))?;
-        file.write_all(BERSERKER)?;
-    }
-    {
-        static PHANTOM: &'static [u8] = include_bytes!("../assets/phantom.png");
-        let mut file = File::create(config_dir.join("phantom.png"))?;
-        file.write_all(PHANTOM)?;
-    }
+
+    save_asset!(armadillo);
+    save_asset!(tango);
+    save_asset!(bronco);
+    save_asset!(jackal);
+    save_asset!(mantis);
+    save_asset!(marauder);
+    save_asset!(riptide);
+    save_asset!(berserker);
+    save_asset!(phantom);
 
     Ok(())
 }

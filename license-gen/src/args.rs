@@ -5,7 +5,7 @@ use crate::bikes::Bike;
 
 /// A license generator for Trials Licenses
 #[derive(StructOpt, Debug)]
-#[structopt(name = "license-gen")]
+#[structopt(name = crate::NAME)]
 pub struct Opt {
     /// Player's nickname
     #[structopt(short, long)]

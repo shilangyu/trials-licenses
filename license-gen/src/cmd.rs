@@ -16,7 +16,7 @@ pub fn generate_nickname_pic(nickname: &str) -> Result<PathBuf, Box<dyn Error>> 
             "-font",
             assets::get_path("Comfortaa-Regular.ttf").to_str().unwrap(),
             "-pointsize",
-            "72",
+            "60",
             label_string.as_str(),
             out_string.as_str(),
         ])
@@ -38,7 +38,7 @@ pub fn generate_version_pic() -> Result<PathBuf, Box<dyn Error>> {
             "-font",
             assets::get_path("Comfortaa-Regular.ttf").to_str().unwrap(),
             "-pointsize",
-            "72",
+            "36",
             label_string.as_str(),
             out_string.as_str(),
         ])
@@ -67,39 +67,51 @@ pub fn generate_blank_license(
     let bike_data: Vec<_> = [
         BikeImg {
             name: Bike::Armadillo,
-            magick_geometry: "+0+500",
+            magick_geometry: "150%x+30+400",
         },
         BikeImg {
             name: Bike::Tango,
-            magick_geometry: "+0+700",
+            magick_geometry: "150%x+30+600",
         },
         BikeImg {
             name: Bike::Bronco,
-            magick_geometry: "+0+900",
+            magick_geometry: "150%x+30+800",
         },
         BikeImg {
             name: Bike::Jackal,
-            magick_geometry: "+300+500",
+            magick_geometry: "150%x+430+400",
         },
         BikeImg {
             name: Bike::Mantis,
-            magick_geometry: "+300+700",
+            magick_geometry: "150%x+430+600",
         },
         BikeImg {
             name: Bike::Marauder,
-            magick_geometry: "+300+900",
+            magick_geometry: "150%x+430+800",
         },
         BikeImg {
             name: Bike::Riptide,
-            magick_geometry: "+600+500",
+            magick_geometry: "150%x+830+400",
         },
         BikeImg {
             name: Bike::Berserker,
-            magick_geometry: "+600+700",
+            magick_geometry: "150%x+830+600",
         },
         BikeImg {
             name: Bike::Phantom,
-            magick_geometry: "+600+900",
+            magick_geometry: "150%x+830+800",
+        },
+        BikeImg {
+            name: Bike::Donkey,
+            magick_geometry: "150%x+1280+400",
+        },
+        BikeImg {
+            name: Bike::Stallion,
+            magick_geometry: "150%x+1320+600",
+        },
+        BikeImg {
+            name: Bike::Agent,
+            magick_geometry: "150%x+1280+800",
         },
     ]
     .iter()
@@ -113,20 +125,32 @@ pub fn generate_blank_license(
         args.push("-composite");
     }
 
-    args.push(nickname_path.to_str().unwrap());
+    let logo_path = assets::get_path("trials_frontier_logo.png");
+    args.push(logo_path.to_str().unwrap());
     args.push("-geometry");
-    args.push("+0+0");
+    args.push("140%x+870+0");
+    args.push("-channel");
+    args.push("A");
+    args.push("-evaluate");
+    args.push("multiply");
+    args.push("0.5");
     args.push("-composite");
 
     args.push(version_path.to_str().unwrap());
-    args.push("-geometry");
-    args.push("+100+100");
     args.push("-composite");
 
+    args.push(nickname_path.to_str().unwrap());
+    args.push("-geometry");
     if let Some(path) = &profile_picture_path {
+        args.push("+400+200");
+        args.push("-composite");
+
         args.push(path.to_str().unwrap());
         args.push("-geometry");
-        args.push("100x100!+100+100");
+        args.push("250x250!+100+100");
+        args.push("-composite");
+    } else {
+        args.push("+200+200");
         args.push("-composite");
     }
 

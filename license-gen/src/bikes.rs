@@ -11,6 +11,9 @@ pub enum Bike {
     Riptide,
     Berserker,
     Phantom,
+    Donkey,
+    Stallion,
+    Agent,
 }
 
 impl std::str::FromStr for Bike {
@@ -27,6 +30,9 @@ impl std::str::FromStr for Bike {
             "riptide" => Self::Riptide,
             "berserker" => Self::Berserker,
             "phantom" => Self::Phantom,
+            "donkey" => Self::Donkey,
+            "stallion" => Self::Stallion,
+            "agent" => Self::Agent,
             _ => return Err("Bike does not exist"),
         })
     }
@@ -44,6 +50,9 @@ impl Bike {
             Self::Riptide => "riptide",
             Self::Berserker => "berserker",
             Self::Phantom => "phantom",
+            Self::Donkey => "donkey",
+            Self::Stallion => "stallion",
+            Self::Agent => "agent",
         })
     }
 

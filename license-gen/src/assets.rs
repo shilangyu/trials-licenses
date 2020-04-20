@@ -23,10 +23,14 @@ pub fn save() -> std::io::Result<()> {
     save_asset!("riptide.png");
     save_asset!("berserker.png");
     save_asset!("phantom.png");
+    save_asset!("donkey.png");
+    save_asset!("stallion.png");
+    save_asset!("agent.png");
     save_asset!("Comfortaa-Regular.ttf");
     save_asset!("green_tick.png");
     save_asset!("red_tick.png");
     save_asset!("blank.png");
+    save_asset!("trials_frontier_logo.png");
 
     Ok(())
 }

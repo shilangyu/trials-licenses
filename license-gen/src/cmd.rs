@@ -1,3 +1,4 @@
+use std::collections::HashSet;
 use std::error::Error;
 use std::path::PathBuf;
 use std::process::Command;
@@ -171,23 +172,48 @@ pub fn apply_ticks(
     let mut args = Vec::new();
     args.push(to.to_str().unwrap());
 
+    let single_pos = |bike| match bike {
+        Bike::Armadillo => "+100+400",
+        Bike::Tango => "+100+600",
+        Bike::Bronco => "+100+800",
+        Bike::Jackal => "+500+400",
+        Bike::Mantis => "+500+600",
+        Bike::Marauder => "+500+800",
+        Bike::Riptide => "+900+400",
+        Bike::Berserker => "+900+600",
+        Bike::Phantom => "+900+800",
+        Bike::Donkey => "+1350+400",
+        Bike::Stallion => "+1350+600",
+        Bike::Agent => "+1350+800",
+    };
+
+    let b: HashSet<_> = basic.iter().cloned().collect();
+    let a: HashSet<_> = advanced.iter().cloned().collect();
+    let single_bikes: HashSet<_> = b.symmetric_difference(&a).collect();
+
     for bike in basic {
         args.push(green_tick.to_str().unwrap());
         args.push("-geometry");
-        args.push(match bike {
-            Bike::Armadillo => "+30+400",
-            Bike::Tango => "+30+600",
-            Bike::Bronco => "+30+800",
-            Bike::Jackal => "+430+400",
-            Bike::Mantis => "+430+600",
-            Bike::Marauder => "+430+800",
-            Bike::Riptide => "+830+400",
-            Bike::Berserker => "+830+600",
-            Bike::Phantom => "+830+800",
-            Bike::Donkey => "+1280+400",
-            Bike::Stallion => "+1280+600",
-            Bike::Agent => "+1280+800",
-        });
+
+        if single_bikes.contains(&bike) {
+            args.push(single_pos(bike));
+        } else {
+            args.push(match bike {
+                Bike::Armadillo => "+30+400",
+                Bike::Tango => "+30+600",
+                Bike::Bronco => "+30+800",
+                Bike::Jackal => "+430+400",
+                Bike::Mantis => "+430+600",
+                Bike::Marauder => "+430+800",
+                Bike::Riptide => "+830+400",
+                Bike::Berserker => "+830+600",
+                Bike::Phantom => "+830+800",
+                Bike::Donkey => "+1280+400",
+                Bike::Stallion => "+1280+600",
+                Bike::Agent => "+1280+800",
+            });
+        }
+
         args.push("-channel");
         args.push("A");
         args.push("-evaluate");
@@ -199,20 +225,26 @@ pub fn apply_ticks(
     for bike in advanced {
         args.push(red_tick.to_str().unwrap());
         args.push("-geometry");
-        args.push(match bike {
-            Bike::Armadillo => "+190+400",
-            Bike::Tango => "+190+600",
-            Bike::Bronco => "+190+800",
-            Bike::Jackal => "+590+400",
-            Bike::Mantis => "+590+600",
-            Bike::Marauder => "+590+800",
-            Bike::Riptide => "+990+400",
-            Bike::Berserker => "+990+600",
-            Bike::Phantom => "+990+800",
-            Bike::Donkey => "+1440+400",
-            Bike::Stallion => "+1440+600",
-            Bike::Agent => "+1440+800",
-        });
+
+        if single_bikes.contains(&bike) {
+            args.push(single_pos(bike));
+        } else {
+            args.push(match bike {
+                Bike::Armadillo => "+190+400",
+                Bike::Tango => "+190+600",
+                Bike::Bronco => "+190+800",
+                Bike::Jackal => "+590+400",
+                Bike::Mantis => "+590+600",
+                Bike::Marauder => "+590+800",
+                Bike::Riptide => "+990+400",
+                Bike::Berserker => "+990+600",
+                Bike::Phantom => "+990+800",
+                Bike::Donkey => "+1440+400",
+                Bike::Stallion => "+1440+600",
+                Bike::Agent => "+1440+800",
+            });
+        }
+
         args.push("-channel");
         args.push("A");
         args.push("-evaluate");

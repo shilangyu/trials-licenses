@@ -1,6 +1,6 @@
 use std::path::PathBuf;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Clone, Hash, Eq)]
 pub enum Bike {
     Armadillo,
     Tango,

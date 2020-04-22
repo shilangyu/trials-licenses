@@ -252,6 +252,12 @@ pub fn apply_ticks(
         args.push("0.5");
         args.push("-composite");
     }
+
+    args.push("-strip");
+    args.push("-quality");
+    args.push("85%");
+    args.push("-gaussian-blur");
+    args.push("0.05");
     args.push(to.to_str().unwrap());
     Command::new("convert").args(args).output()?;
 

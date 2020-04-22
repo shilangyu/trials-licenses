@@ -1,6 +1,6 @@
 [package]
 name = "license-gen"
-version = "0.3.0"
+version = "0.4.0"
 authors = ["shilangyu <xmarcinmarcin@gmail.com>"]
 edition = "2018"
 

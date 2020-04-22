@@ -15,7 +15,7 @@ fn main() {
     let mut args = args::Opt::from_args();
 
     if let None = args.output {
-        args.output = Some(PathBuf::from(args.nickname.clone() + ".png"));
+        args.output = Some(PathBuf::from(args.nickname.clone() + ".jpg"));
     }
 
     println!("Generating nickname...");

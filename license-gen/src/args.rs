@@ -23,7 +23,7 @@ pub struct Opt {
     #[structopt(short, long)]
     pub advanced: Vec<Bike>,
 
-    /// Output image path [default: $nickname.png]
+    /// Output image path [default: $nickname.jpg]
     #[structopt(short, long, parse(from_os_str))]
     pub output: Option<PathBuf>,
 }

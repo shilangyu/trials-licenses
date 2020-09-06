@@ -220,6 +220,7 @@ pub fn apply_ticks(
         args.push("-evaluate");
         args.push("multiply");
         args.push("0.5");
+        args.push("+channel");
         args.push("-composite");
     }
 

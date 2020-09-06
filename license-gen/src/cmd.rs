@@ -134,6 +134,7 @@ pub fn generate_blank_license(
     args.push("-evaluate");
     args.push("multiply");
     args.push("0.5");
+    args.push("+channel");
     args.push("-composite");
 
     args.push(version_path.to_str().unwrap());
